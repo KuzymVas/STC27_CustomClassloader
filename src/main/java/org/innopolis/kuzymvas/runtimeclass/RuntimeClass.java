@@ -165,6 +165,11 @@ public class RuntimeClass {
             return Optional.empty();
         }
         JavaCompiler javac = ToolProvider.getSystemJavaCompiler();
+        if (javac == null) {
+            System.out.println("Java compiler not found. Make sure that you run this app with JDK and not the JRE. Compilation aborted");
+            System.out.println("Your java home:" + System.getProperty("java.home"));
+            return Optional.empty();
+        }
         int result = javac.run(null, System.out, System.err,
                                pathToJavaFile.get().toString(), "-cp", workDirPath.toString());
         if (result != 0) {
